@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2025 at 10:41 AM
+-- Generation Time: Sep 17, 2025 at 09:34 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,6 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
+  `user_first_name` varchar(255) NOT NULL,
+  `user_last_name` varchar(255) NOT NULL,
   `user_email` varchar(255) NOT NULL,
   `user_password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -37,10 +39,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_email`, `user_password`) VALUES
-(3, 'vicky@gmail.com', '$2b$10$R9mKVbAt.nDGuk.hIAi.d.ETx/ieng3kFW0RNSf0DBIr6yP51uc.S'),
-(4, 'dina@gmail.com', '$2b$10$HiaKi6W959H5RBUjKo/k3.1hJNdWb.tYj.rpRANBQaBsxzRcH6l/m'),
-(5, 'dina22@gmail.com', '$2b$10$ZL1zzVKIwcQIv7om/NtyR.uFPM/oNO/KaSBjkL5PxQjvWnYWUgHf.');
+INSERT INTO `user` (`user_id`, `user_first_name`, `user_last_name`, `user_email`, `user_password`) VALUES
+(6, 'Bobi', 'Nasution', 'dia22@gmail.com', '$2b$10$iYshqp5bd7gO.dNsUPfVx.IX5Exjso7Qc9uTONQ4iWrFVidcKHXZ.'),
+(7, 'VICKY', 'YOHANES', 'vick@gmail.com', '$2b$10$0Gq./lmKRcHAfuDLSks.DOJSCc/RrP3SYe/AomOtYVNGE3Eppp5gu');
 
 --
 -- Indexes for dumped tables
@@ -60,7 +61,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
