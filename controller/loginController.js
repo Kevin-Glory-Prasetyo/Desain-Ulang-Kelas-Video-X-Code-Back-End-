@@ -2,45 +2,48 @@ import bcrypt from "bcrypt";
 import db from "../database/connection.js";
 
 export const userRegister = async (req, res) => {
-  const { user_email, user_password } = req.body;
+  const { user_first_name, user_last_name, user_email, user_password } = req.body;
 
-  if (!user_email || !user_password) {
+  if (!user_first_name || !user_last_name || !user_email || !user_password) {
     return res.status(400).json({
-        statusCode: 400,
-        status: "Fail",
-        error: true,
-        message: "Email & password wajib diisi"
+      statusCode: 400,
+      status: "Fail",
+      error: true,
+      message: "First name, last name, email & password wajib diisi"
     });
   }
-
 
   try {
     const [checkUser] = await db.query("SELECT * FROM user WHERE user_email = ?", [user_email]);
     if (checkUser.length > 0) {
-        return res.status(400).json({
-            statusCode: 400,
-            status: "Fail",
-            error: true,
-            message: "Email sudah terdaftar" 
-        });
+      return res.status(409).json({
+        statusCode: 409,
+        status: "Fail",
+        error: true,
+        message: "Email sudah terdaftar"
+      });
     }
 
-    const passToString = user_password.toString()
-    const hashPasword = await bcrypt.hash(passToString, 10);
-    const [insertData] = await db.query("INSERT INTO user (user_email, user_password) VALUES (?, ?)", [user_email, hashPasword]);
+    const passToString = user_password.toString();
+    const hashPassword = await bcrypt.hash(passToString, 10);
+
+    const [insertData] = await db.query(
+      "INSERT INTO user (user_first_name, user_last_name, user_email, user_password) VALUES (?, ?, ?, ?)",
+      [user_first_name, user_last_name, user_email, hashPassword]
+    );
 
     if (insertData.affectedRows == 1) {
-        return res.status(200).json({ 
-            statusCode: 200,
-            status: "success",
-            error: false,
-            message: "Registrasi berhasil!" 
-        });  
+      return res.status(200).json({
+        statusCode: 200,
+        status: "success",
+        error: false,
+        message: "Registrasi berhasil!"
+      });
     }
   } catch (err) {
     console.error(err);
-    res.status(500).json({ 
-        message: "Error server" 
+    res.status(500).json({
+      message: "Error server"
     });
   }
 };
