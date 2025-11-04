@@ -2,24 +2,42 @@ import bcrypt from "bcrypt";
 import db from "../database/connection.js";
 import jwt from "jsonwebtoken";
 
+//
+// =============== REGISTER USER ==================
+//
 export const userRegister = async (req, res) => {
-  const { user_first_name, user_last_name, user_email, user_password } =
-    req.body;
+  const {
+    user_first_name,
+    user_last_name,
+    user_email,
+    user_password,
+    user_phone, // Tambahan: nomor handphone
+  } = req.body;
 
-  if (!user_first_name || !user_last_name || !user_email || !user_password) {
+  // Validasi input, termasuk user_phone
+  if (
+    !user_first_name ||
+    !user_last_name ||
+    !user_email ||
+    !user_password ||
+    !user_phone
+  ) {
     return res.status(400).json({
       statusCode: 400,
       status: "Fail",
       error: true,
-      message: "First name, last name, email & password wajib diisi",
+      message:
+        "First name, last name, email, password, dan nomor handphone wajib diisi",
     });
   }
 
   try {
+    // Cek apakah email sudah terdaftar
     const [checkUser] = await db.query(
       "SELECT * FROM user WHERE user_email = ?",
       [user_email]
     );
+
     if (checkUser.length > 0) {
       return res.status(409).json({
         statusCode: 409,
@@ -29,15 +47,18 @@ export const userRegister = async (req, res) => {
       });
     }
 
+    // Hash password
     const passToString = user_password.toString();
     const hashPassword = await bcrypt.hash(passToString, 10);
 
+    // Simpan data user baru, termasuk nomor handphone dan image kosong
     const [insertData] = await db.query(
-      "INSERT INTO user (user_first_name, user_last_name, user_email, user_password) VALUES (?, ?, ?, ?)",
-      [user_first_name, user_last_name, user_email, hashPassword]
+      `INSERT INTO user (user_first_name, user_last_name, user_email, user_password, user_phone, user_image)
+       VALUES (?, ?, ?, ?, ?, '')`,
+      [user_first_name, user_last_name, user_email, hashPassword, user_phone]
     );
 
-    if (insertData.affectedRows == 1) {
+    if (insertData.affectedRows === 1) {
       return res.status(200).json({
         statusCode: 200,
         status: "success",
@@ -53,6 +74,9 @@ export const userRegister = async (req, res) => {
   }
 };
 
+//
+// =============== LOGIN USER ==================
+//
 export const userLogin = async (req, res) => {
   const { user_email, user_password } = req.body;
 
@@ -93,16 +117,21 @@ export const userLogin = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.user_id, first_name: user.user_first_name, last_name: user.user_last_name, email: user.user_email },
+      {
+        id: user.user_id,
+        first_name: user.user_first_name,
+        last_name: user.user_last_name,
+        email: user.user_email,
+      },
       process.env.JWT_SECRET,
-      { expiresIn: "20m" } 
+      { expiresIn: "20m" }
     );
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, 
+      secure: false,
       sameSite: "Lax",
-      maxAge: 20 * 60 * 1000, 
+      maxAge: 20 * 60 * 1000,
     });
 
     res.status(200).json({
@@ -119,6 +148,9 @@ export const userLogin = async (req, res) => {
   }
 };
 
+//
+// =============== CHANGE PASSWORD ==================
+//
 export const changePassword = async (req, res) => {
   const { user_email, new_password, confirm_password } = req.body;
 
@@ -136,7 +168,7 @@ export const changePassword = async (req, res) => {
       statusCode: 400,
       status: "Fail",
       error: true,
-      message: "Paassword baru dan konfirmasi passsword tidak cocok",
+      message: "Password baru dan konfirmasi password tidak cocok",
     });
   }
 
@@ -155,14 +187,14 @@ export const changePassword = async (req, res) => {
     }
 
     const passToString = new_password.toString();
-    const hashPasword = await bcrypt.hash(passToString, 10);
+    const hashPassword = await bcrypt.hash(passToString, 10);
 
     const [updatePassword] = await db.query(
       "UPDATE user SET user_password = ? WHERE user_email = ?",
-      [hashPasword, user_email]
+      [hashPassword, user_email]
     );
 
-    if (updatePassword.affectedRows == 1) {
+    if (updatePassword.affectedRows === 1) {
       return res.status(200).json({
         statusCode: 200,
         status: "success",
@@ -170,7 +202,7 @@ export const changePassword = async (req, res) => {
         message: "Reset password berhasil",
       });
     }
-  } catch (error) {
+  } catch (err) {
     console.error(err);
     res.status(500).json({
       message: "Error server",
@@ -178,8 +210,9 @@ export const changePassword = async (req, res) => {
   }
 };
 
-
-
+//
+// =============== LOGOUT USER ==================
+//
 export const userLogout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,

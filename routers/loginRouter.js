@@ -19,4 +19,3 @@ router.post("/logout", userLogout);
 
 
 export default router
-

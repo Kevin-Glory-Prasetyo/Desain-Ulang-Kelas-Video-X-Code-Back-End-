@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 11, 2025 at 09:59 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost:3306
+-- Generation Time: Nov 04, 2025 at 12:52 PM
+-- Server version: 8.0.40
+-- PHP Version: 8.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,14 +28,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `course_video` (
-  `id` int(11) NOT NULL,
-  `gambarProduk` varchar(255) NOT NULL,
-  `harga` int(11) NOT NULL,
-  `namaProduk` varchar(255) NOT NULL,
+  `id` int NOT NULL,
+  `gambarProduk` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `harga` int NOT NULL,
+  `namaProduk` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `tanggal` date NOT NULL,
-  `deskripsi` varchar(500) NOT NULL,
-  `materi` varchar(500) NOT NULL,
-  `skill` varchar(500) NOT NULL
+  `deskripsi` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `materi` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `skill` varchar(500) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -67,20 +67,23 @@ INSERT INTO `course_video` (`id`, `gambarProduk`, `harga`, `namaProduk`, `tangga
 --
 
 CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL,
-  `user_first_name` varchar(255) NOT NULL,
-  `user_last_name` varchar(255) NOT NULL,
-  `user_email` varchar(255) NOT NULL,
-  `user_password` varchar(255) NOT NULL
+  `user_id` int NOT NULL,
+  `user_first_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_last_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_phone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_first_name`, `user_last_name`, `user_email`, `user_password`) VALUES
-(6, 'Bobi', 'Nasution', 'dia22@gmail.com', '$2b$10$iYshqp5bd7gO.dNsUPfVx.IX5Exjso7Qc9uTONQ4iWrFVidcKHXZ.'),
-(8, 'Viki', 'Yohanes', 'vikiyh12@gmail.com', '$2b$10$k.5y7FOsa2ttw6lbuVxFJetBuBGmQzhTKRzOEpE27KQ6iHh4h6.Du');
+INSERT INTO `user` (`user_id`, `user_first_name`, `user_last_name`, `user_email`, `user_password`, `user_phone`, `user_image`) VALUES
+(6, 'Bobi', 'Nasution', 'dia22@gmail.com', '$2b$10$iYshqp5bd7gO.dNsUPfVx.IX5Exjso7Qc9uTONQ4iWrFVidcKHXZ.', '', ''),
+(8, 'Viki', 'Yohanes', 'vikiyh12@gmail.com', '$2b$10$k.5y7FOsa2ttw6lbuVxFJetBuBGmQzhTKRzOEpE27KQ6iHh4h6.Du', '', ''),
+(9, 'Kevin', 'Glory Prasetyo', 'kevinprasetyo817@gmail.com', '$2b$10$cpBGtP6gnD2pKnpRiLoex.vKIJbZD8dX3pYSMZSB9MlpDYEZIdCFS', '', '');
 
 --
 -- Indexes for dumped tables
@@ -106,13 +109,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `course_video`
 --
 ALTER TABLE `course_video`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
