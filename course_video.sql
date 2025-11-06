@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 04, 2025 at 12:52 PM
+-- Generation Time: Nov 06, 2025 at 04:11 AM
 -- Server version: 8.0.40
 -- PHP Version: 8.2.27
 
@@ -63,6 +63,34 @@ INSERT INTO `course_video` (`id`, `gambarProduk`, `harga`, `namaProduk`, `tangga
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `password_reset`
+--
+
+CREATE TABLE `password_reset` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `code` varchar(6) NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `used` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `password_reset`
+--
+
+INSERT INTO `password_reset` (`id`, `user_id`, `email`, `code`, `expires_at`, `used`, `created_at`) VALUES
+(1, 9, 'kevinprasetyo817@gmail.com', '3373', '2025-11-06 03:51:47', 0, '2025-11-06 03:41:47'),
+(2, 9, 'kevinprasetyo817@gmail.com', '5129', '2025-11-06 03:58:50', 0, '2025-11-06 03:48:50'),
+(3, 9, 'kevinprasetyo817@gmail.com', '3923', '2025-11-06 04:04:51', 0, '2025-11-06 03:54:51'),
+(4, 9, 'kevinprasetyo817@gmail.com', '2799', '2025-11-06 04:07:54', 0, '2025-11-06 03:57:54'),
+(5, 9, 'kevinprasetyo817@gmail.com', '5671', '2025-11-06 04:10:54', 0, '2025-11-06 04:00:54'),
+(6, 9, 'kevinprasetyo817@gmail.com', '8516', '2025-11-06 04:13:16', 0, '2025-11-06 04:03:16');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -83,7 +111,9 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`user_id`, `user_first_name`, `user_last_name`, `user_email`, `user_password`, `user_phone`, `user_image`) VALUES
 (6, 'Bobi', 'Nasution', 'dia22@gmail.com', '$2b$10$iYshqp5bd7gO.dNsUPfVx.IX5Exjso7Qc9uTONQ4iWrFVidcKHXZ.', '', ''),
 (8, 'Viki', 'Yohanes', 'vikiyh12@gmail.com', '$2b$10$k.5y7FOsa2ttw6lbuVxFJetBuBGmQzhTKRzOEpE27KQ6iHh4h6.Du', '', ''),
-(9, 'Kevin', 'Glory Prasetyo', 'kevinprasetyo817@gmail.com', '$2b$10$cpBGtP6gnD2pKnpRiLoex.vKIJbZD8dX3pYSMZSB9MlpDYEZIdCFS', '', '');
+(9, 'Kevin', 'Prasetyo', 'kevinprasetyo817@gmail.com', '$2b$10$Uc/uO.iXwUgYsvk1FgWIOeYvwwhwo3pr2ySZEDXEPxViyVGLn59tu', '0856778889955', '/uploads/img/1762264615644.png'),
+(10, 'Leif', 'Botak', 'leif@gmail.com', '$2b$10$SrkjRCIGC5GXxYe3OLCVju.BxvUveSLt2IMohVE.fcYs0pdkF7TJO', '087817958859', ''),
+(11, 'jo', 'nat', 'jo@gmail.com', '$2b$10$uqJGRPjvOuitEpceJvn/COx.Gjysr.WF1sTCg8zSBAQi6ycGKnBWq', '+62856778889955', '');
 
 --
 -- Indexes for dumped tables
@@ -94,6 +124,14 @@ INSERT INTO `user` (`user_id`, `user_first_name`, `user_last_name`, `user_email`
 --
 ALTER TABLE `course_video`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `password_reset`
+--
+ALTER TABLE `password_reset`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `email` (`email`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `user`
@@ -112,10 +150,26 @@ ALTER TABLE `course_video`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT for table `password_reset`
+--
+ALTER TABLE `password_reset`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `password_reset`
+--
+ALTER TABLE `password_reset`
+  ADD CONSTRAINT `password_reset_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

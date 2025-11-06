@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 import { dir } from "console";
 import detailProdukRouter from './routers/detailProdukRouter.js'
 import profileRouter from "./routers/profileRouter.js";
+import passwordResetRouter from "./routers/passwordResetRouter.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,6 +29,7 @@ app.use("/produk", detailProdukRouter);
 app.use("/api", productRouter); 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/profile", profileRouter);
+app.use("/auth/password", passwordResetRouter);
 
 app.listen(PORT, () => {
   console.log(`Server jalan di http://localhost:${PORT}`);
