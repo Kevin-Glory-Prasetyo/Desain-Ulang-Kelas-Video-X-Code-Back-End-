@@ -4,11 +4,13 @@ import jwt from "jsonwebtoken";
 import { sendOtpMail } from "../utils/mailer.js";
 
 // helper
-const nowPlusMinutes = (m) =>
-  new Date(Date.now() + m * 60 * 1000)
-    .toISOString()
-    .slice(0, 19)
-    .replace("T", " ");
+const nowPlusMinutes = (m) =>{
+  const date = new Date();
+  date.setMinutes(date.getMinutes() + m);
+  // Format YYYY-MM-DD HH:MM:SS (lokal)
+  const pad = (n) => (n < 10 ? "0" + n : n);
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+};
 
 function genCode4() {
   return Math.floor(1000 + Math.random() * 9000).toString(); // 4 digit
