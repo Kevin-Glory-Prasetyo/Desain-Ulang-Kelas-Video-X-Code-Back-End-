@@ -1,7 +1,15 @@
 import jwt from "jsonwebtoken";
 
 export const verifyToken = (req, res, next) => {
-  const token = req.cookies.token; // ambil token dari cookie
+  // 1. Coba ambil dari Cookie
+  const tokenFromCookie = req.cookies.token;
+  
+  // 2. Coba ambil dari Header Authorization (Format: Bearer <token>)
+  const authHeader = req.headers['authorization'];
+  const tokenFromHeader = authHeader && authHeader.split(' ')[1];
+
+  // 3. Gunakan salah satu yang ada
+  const token = tokenFromCookie || tokenFromHeader;
 
   if (!token) {
     return res.status(401).json({
@@ -13,14 +21,10 @@ export const verifyToken = (req, res, next) => {
   }
 
   try {
-    // verifikasi token dengan secret key
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Verifikasi token
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET || process.env.JWT_SECRET);
 
-    // simpan payload user di req.user agar mudah diakses di controller lain
-    // contoh di controller: req.user.id, req.user.email
     req.user = decoded;
-
-    // tetap simpan format lama (req.data.user) agar kompatibel dengan file lama
     req.data = { user: decoded };
 
     next();
@@ -33,3 +37,5 @@ export const verifyToken = (req, res, next) => {
     });
   }
 };
+
+export default verifyToken; 
