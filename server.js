@@ -12,6 +12,7 @@ import detailProdukRouter from './routers/detailProdukRouter.js';
 import profileRouter from "./routers/profileRouter.js";
 import passwordResetRouter from "./routers/passwordResetRouter.js";
 import pembelianRouter from "./routers/pembelianRouter.js";  // <- router pembelian
+import uploadRouter from "./routers/uploadRouter.js";
 
 // Setup
 const app = express();
@@ -45,3 +46,5 @@ app.use("/api", pembelianRouter);  // <-- sekarang aman
 app.listen(PORT, () => {
   console.log(`Server jalan di http://localhost:${PORT}`);
 });
+
+app.use("/api", uploadRouter);

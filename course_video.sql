@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 06, 2025 at 04:11 AM
+-- Generation Time: Nov 25, 2025 at 07:09 AM
 -- Server version: 8.0.40
--- PHP Version: 8.2.27
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,30 +35,32 @@ CREATE TABLE `course_video` (
   `tanggal` date NOT NULL,
   `deskripsi` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
   `materi` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
-  `skill` varchar(500) COLLATE utf8mb4_general_ci NOT NULL
+  `skill` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `jumlahmateri` int NOT NULL,
+  `durasimateri` varchar(20) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `course_video`
 --
 
-INSERT INTO `course_video` (`id`, `gambarProduk`, `harga`, `namaProduk`, `tanggal`, `deskripsi`, `materi`, `skill`) VALUES
-(1, 'image/backupProxmox.avif', 50000, 'Backup data secara otomatis di proxmox (VM, files & database) untuk keamanan data', '2025-01-18', 'Kehilangan data server bisa sangat merugikan, baik untuk perusahaan maupun individu. Kelas ini membahas bagaimana membangun sistem backup otomatis di Proxmox, mulai dari VM, file, hingga database, dengan metode yang aman dan terstruktur. Dengan backup yang terjadwal, administrator bisa lebih tenang karena data penting selalu terlindungi dan dapat dipulihkan dengan cepat bila terjadi masalah.', 'Konfigurasi backup otomatis VM dan Container, Backup database dan file system, Jadwal Backup dan monitoring, Restore data dengan cepat ', 'Manajemen Proxmox, backup & restore VM, pengamanan database, monitoring sistem.'),
-(2, 'image/konfigurasiMikrotik.png', 75000, 'Belajar Mikrotik untuk Pemula – Konfigurasi Dasar untuk Kebutuhan Jaringan Komputer', '2025-05-10', 'Mikrotik RouterOS adalah salah satu perangkat jaringan yang paling banyak digunakan di Indonesia. Kelas ini cocok bagi pemula yang ingin memahami dasar-dasar konfigurasi jaringan menggunakan Mikrotik. Dengan panduan step-by-step, peserta akan mampu melakukan konfigurasi IP, DHCP, NAT, hingga firewall dasar untuk kebutuhan rumah, kantor kecil, maupun usaha.', 'Pengenalan RouterOS, Setting IP address & gateway, Konfigurasi DHCP, NAT & firewall dasar, Monitoring jaringan', 'Networking dasar, konfigurasi RouterOS, manajemen IP, NAT & firewall dasar.'),
-(3, 'image/belajarFreSBD.jpg', 50000, 'Download belajar freebsd dan security hardening', '2025-09-01', 'FreeBSD dikenal sebagai sistem operasi berbasis UNIX yang stabil dan aman. Kelas ini membahas instalasi, pengelolaan user, hingga hardening sistem untuk meningkatkan keamanan server. Peserta akan memahami praktik terbaik dalam menjaga server tetap aman dari serangan, termasuk konfigurasi firewall PF dan penggunaan tool keamanan lainnya.', 'Instalasi FreeBSD, Manajemen user & permission, Firewall PF dan security tools, Praktik hardening server', 'Administrasi sistem UNIX, FreeBSD hardening, firewall PF, keamanan server.'),
-(5, 'image/cmshacking.webp', 50000, 'Essential Hacking Web CMS Hacking & Security (WordPress & Joomla)', '2024-10-05', 'CMS seperti WordPress dan Joomla sering menjadi target serangan hacker karena digunakan oleh jutaan website. Kelas ini mengajarkan bagaimana mengenali celah keamanan pada CMS populer, mengeksploitasi kerentanannya secara etis, dan mengamankannya kembali. Peserta akan mempelajari kerentanan plugin, theme, serta praktik hardening CMS untuk mencegah serangan.', 'Struktur CMS WordPress & Joomla\r\n, Celah umum (SQLi, XSS, RCE), Plugin & theme security, Hardening & patching', 'Web security, exploit CMS, penetration testing dasar, hardening aplikasi web.'),
-(6, 'image/ehticalexploitdev.jpg', 200000, 'Ethical Hacking & Exploit Development ', '2024-11-22', 'Kelas tingkat lanjut ini dirancang untuk peserta yang ingin memahami proses pembuatan exploit dari awal. Mulai dari pengenalan buffer overflow, analisis memory corruption, hingga reverse engineering sederhana, kelas ini membantu peserta memahami bagaimana celah keamanan dimanfaatkan dan bagaimana menutupnya. Cocok untuk praktisi keamanan yang ingin naik level.', 'Pengenalan exploit & payload, Buffer overflow & memory corruption, Reverse engineering dasar, Simulasi exploit di lab', 'Exploit development, reverse engineering, buffer overflow, penetration testing.'),
-(7, 'image/kerentananowasp.png', 150000, 'Ethical Hacking dan Eksplorasi Kerentanan dalam OWASP Top 10 2021', '2024-12-27', 'OWASP Top 10 adalah standar global yang digunakan untuk mengidentifikasi kerentanan aplikasi web. Kelas ini membahas masing-masing kerentanan beserta contoh nyata dan simulasi serangan. Peserta akan belajar bagaimana menguji aplikasi, menemukan kelemahan, dan menerapkan patch keamanan sesuai rekomendasi OWASP.', 'Injeksi, XSS, CSRF, Authentication & session hijacking, Security misconfiguration, Testing & patching aplikasi web', 'Web app security, vulnerability testing, exploit OWASP Top 10, secure coding.'),
-(8, 'image/webaplicationV2.webp', 100000, 'Ethical Web Application Hacking & Security V2 ', '2024-11-01', 'Kelas ini berfokus pada serangan web modern seperti IDOR, API exploitation, hingga advanced SQLi dan XSS. Peserta akan memahami cara kerja serangan, bagaimana mencegahnya, dan best practice dalam pengamanan aplikasi web. Sangat cocok untuk developer maupun security tester.', 'SQL Injection & XSS advanced, Insecure Direct Object Reference (IDOR), API security testing, Defense in depth', 'Advanced web hacking, API security, exploit analysis, secure coding.'),
-(9, 'image/apache.svg', 75000, 'Membangun Apache Web Server dengan keamanan yang optimal V2', '2025-05-16', 'Apache adalah web server populer yang digunakan di banyak infrastruktur. Kelas ini membahas instalasi, konfigurasi, hingga penguatan keamanan Apache. Peserta akan belajar mengatur virtual host, menggunakan SSL/TLS, serta menambahkan modul keamanan seperti mod_security. Selain itu, dibahas juga tuning performa agar server lebih cepat dan stabil.\r\n', 'Instalasi & konfigurasi Apache, Virtual host & mod_security, SSL/TLS setup, Performance tuning', 'Apache administration, server hardening, SSL/TLS setup, performance tuning.'),
-(10, 'image/httpsreverse.webp', 75000, 'Membangun Infrastruktur Modern Berbasis HTTPS Reverse Proxy dengan Proxmox', '2025-05-01', 'Reverse proxy berbasis HTTPS menjadi salah satu pondasi keamanan dalam arsitektur server modern. Kelas ini mengajarkan bagaimana membangun reverse proxy di atas Proxmox, lengkap dengan sertifikat SSL Let’s Encrypt, load balancing, dan integrasi dengan VM maupun container.', 'Instalasi & konfigurasi reverse proxy, Load balancing, HTTPS & Let’s Encrypt, Integrasi dengan VM & container', 'Reverse proxy setup, SSL management, load balancing, Proxmox integration.'),
-(11, 'image/docker.png', 75000, 'Membangun Server Monolith dengan Docker dengan cepat dan mudah Panduan dari Instalasi hingga Deploy v2', '2025-08-13', 'Docker adalah teknologi container yang banyak digunakan dalam pengembangan modern. Kelas ini membahas bagaimana membangun server monolith menggunakan Docker, mulai dari instalasi, membuat container, hingga deployment aplikasi. Peserta juga akan belajar praktik terbaik dalam manajemen Docker agar server tetap efisien.', 'Instalasi Docker, Membuat container custom, Deployment monolith apps, Best practice manajemen Docker', 'Docker containerization, deployment monolith, image building, container management.'),
-(12, 'image/frankenPHP.png', 75000, 'Membangun layanan server dengan platform PHP modern menggunakan FrankenPHP v2', '2025-04-19', 'FrankenPHP adalah server PHP modern yang dirancang untuk performa tinggi. Kelas ini membahas cara instalasi, konfigurasi, dan optimasi FrankenPHP agar aplikasi PHP berjalan lebih cepat dan aman. Peserta juga akan belajar praktik deployment aplikasi modern berbasis PHP.', 'Instalasi FrankenPHP, Konfigurasi server modern, Benchmarking & tuning performa, Deploy aplikasi PHP', 'PHP server modern, FrankenPHP, web hosting, performance optimization.'),
-(13, 'image/nesus.webp', 75000, 'Nessus & Eksploitasi Kerentanan di Sistem & Aplikasi', '2025-05-14', 'Nessus adalah salah satu tool scanning kerentanan paling populer. Kelas ini mengajarkan cara menggunakan Nessus untuk menemukan celah pada sistem dan aplikasi, serta bagaimana memanfaatkan hasil scan untuk pengujian penetrasi. Peserta akan memahami langkah demi langkah mulai dari instalasi, scanning, hingga eksploitasi.', 'Instalasi & konfigurasi Nessus, Scan sistem & aplikasi, Analisis laporan kerentanan, Eksploitasi hasil scan', 'Vulnerability scanning, Nessus usage, penetration testing, exploit analysis.'),
-(14, 'image/proxmoxVE.webp', 150000, 'Proxmox Virtual Environment (Proxmox VE) untuk kebutuhan server ', '2025-01-31', 'Proxmox VE adalah platform virtualisasi open-source yang kuat untuk membangun server enterprise. Kelas ini membahas instalasi, pembuatan VM & container, manajemen backup, serta cluster dan high availability. Peserta akan memahami cara membangun infrastruktur virtual yang stabil dan aman.', 'Instalasi Proxmox, Manajemen VM & container, Backup & restore, Cluster & high availability', 'Virtualization, Proxmox management, backup & restore, HA cluster.'),
-(15, 'image/officenetwork.jpg', 35000, 'Webinar Membangun Layanan Internet Kantor dengan Keamanan Maksimal dengan menggunakan Mikrotik RouterOS v7 ', '2024-08-29', 'Webinar ini membahas bagaimana membangun jaringan internet kantor yang aman dan stabil menggunakan Mikrotik RouterOS v7. Peserta akan mempelajari konfigurasi routing, firewall, VPN, dan manajemen bandwidth, sehingga dapat mengoptimalkan layanan internet di lingkungan kantor.', 'Routing & NAT, Firewall & filtering, VPN di RouterOS v7, Bandwidth management', 'Advanced Mikrotik, firewall, VPN setup, bandwidth management.'),
-(16, 'image/hackingandsecurity.jpg', 75000, 'Webinar X-code – Ethical network hacking & Security V2', '2024-09-10', 'Webinar ini fokus pada keamanan jaringan dengan pendekatan ethical hacking. Peserta akan mempelajari teknik sniffing, spoofing, hingga serangan jaringan wireless, serta strategi pertahanan yang dapat diterapkan untuk mengamankan infrastruktur jaringan.', 'Sniffing & spoofing, Network attacks, Wireless security, Defense strategies', 'Network hacking, wireless security, sniffing & spoofing, defense strategies.'),
-(17, 'image/windowshacking.webp', 50000, 'Windows Hacking & Security', '2025-09-02', 'Windows sering menjadi target serangan karena digunakan secara luas. Kelas ini membahas celah keamanan pada Windows, teknik privilege escalation, serta cara melakukan hardening agar sistem lebih aman. Selain itu, peserta akan mempelajari analisis malware dasar untuk memahami ancaman di Windows.', 'Windows user management, Local & remote exploits, Malware & defense, Hardening Windows Server & Desktop', 'Windows security, privilege escalation, malware analysis, system hardening.');
+INSERT INTO `course_video` (`id`, `gambarProduk`, `harga`, `namaProduk`, `tanggal`, `deskripsi`, `materi`, `skill`, `jumlahmateri`, `durasimateri`) VALUES
+(1, 'image/backupProxmox.avif', 50000, 'Backup data secara otomatis di proxmox (VM, files & database) untuk keamanan data', '2025-01-18', 'Kehilangan data server bisa sangat merugikan, baik untuk perusahaan maupun individu. Kelas ini membahas bagaimana membangun sistem backup otomatis di Proxmox, mulai dari VM, file, hingga database, dengan metode yang aman dan terstruktur. Dengan backup yang terjadwal, administrator bisa lebih tenang karena data penting selalu terlindungi dan dapat dipulihkan dengan cepat bila terjadi masalah.', 'Konfigurasi backup otomatis VM dan Container, Backup database dan file system, Jadwal Backup dan monitoring, Restore data dengan cepat ', 'Manajemen Proxmox, backup & restore VM, pengamanan database, monitoring sistem.', 4, '1 Jam 40 Menit'),
+(2, 'image/konfigurasiMikrotik.png', 75000, 'Belajar Mikrotik untuk Pemula – Konfigurasi Dasar untuk Kebutuhan Jaringan Komputer', '2025-05-10', 'Mikrotik RouterOS adalah salah satu perangkat jaringan yang paling banyak digunakan di Indonesia. Kelas ini cocok bagi pemula yang ingin memahami dasar-dasar konfigurasi jaringan menggunakan Mikrotik. Dengan panduan step-by-step, peserta akan mampu melakukan konfigurasi IP, DHCP, NAT, hingga firewall dasar untuk kebutuhan rumah, kantor kecil, maupun usaha.', 'Pengenalan RouterOS, Setting IP address & gateway, Konfigurasi DHCP, NAT & firewall dasar, Monitoring jaringan', 'Networking dasar, konfigurasi RouterOS, manajemen IP, NAT & firewall dasar.', 5, '1 Jam 30 Menit'),
+(3, 'image/belajarFreSBD.jpg', 50000, 'Download belajar freebsd dan security hardening', '2025-09-01', 'FreeBSD dikenal sebagai sistem operasi berbasis UNIX yang stabil dan aman. Kelas ini membahas instalasi, pengelolaan user, hingga hardening sistem untuk meningkatkan keamanan server. Peserta akan memahami praktik terbaik dalam menjaga server tetap aman dari serangan, termasuk konfigurasi firewall PF dan penggunaan tool keamanan lainnya.', 'Instalasi FreeBSD, Manajemen user & permission, Firewall PF dan security tools, Praktik hardening server', 'Administrasi sistem UNIX, FreeBSD hardening, firewall PF, keamanan server.', 4, '1 Jam 45 Menit'),
+(5, 'image/cmshacking.webp', 50000, 'Essential Hacking Web CMS Hacking & Security (WordPress & Joomla)', '2024-10-05', 'CMS seperti WordPress dan Joomla sering menjadi target serangan hacker karena digunakan oleh jutaan website. Kelas ini mengajarkan bagaimana mengenali celah keamanan pada CMS populer, mengeksploitasi kerentanannya secara etis, dan mengamankannya kembali. Peserta akan mempelajari kerentanan plugin, theme, serta praktik hardening CMS untuk mencegah serangan.', 'Struktur CMS WordPress & Joomla\r\n, Celah umum (SQLi, XSS, RCE), Plugin & theme security, Hardening & patching', 'Web security, exploit CMS, penetration testing dasar, hardening aplikasi web.', 6, '1 Jam 25 Menit'),
+(6, 'image/ehticalexploitdev.jpg', 200000, 'Ethical Hacking & Exploit Development ', '2024-11-22', 'Kelas tingkat lanjut ini dirancang untuk peserta yang ingin memahami proses pembuatan exploit dari awal. Mulai dari pengenalan buffer overflow, analisis memory corruption, hingga reverse engineering sederhana, kelas ini membantu peserta memahami bagaimana celah keamanan dimanfaatkan dan bagaimana menutupnya. Cocok untuk praktisi keamanan yang ingin naik level.', 'Pengenalan exploit & payload, Buffer overflow & memory corruption, Reverse engineering dasar, Simulasi exploit di lab', 'Exploit development, reverse engineering, buffer overflow, penetration testing.', 4, '2 Jam 45 Menit'),
+(7, 'image/kerentananowasp.png', 150000, 'Ethical Hacking dan Eksplorasi Kerentanan dalam OWASP Top 10 2021', '2024-12-27', 'OWASP Top 10 adalah standar global yang digunakan untuk mengidentifikasi kerentanan aplikasi web. Kelas ini membahas masing-masing kerentanan beserta contoh nyata dan simulasi serangan. Peserta akan belajar bagaimana menguji aplikasi, menemukan kelemahan, dan menerapkan patch keamanan sesuai rekomendasi OWASP.', 'Injeksi, XSS, CSRF, Authentication & session hijacking, Security misconfiguration, Testing & patching aplikasi web', 'Web app security, vulnerability testing, exploit OWASP Top 10, secure coding.', 6, '2 Jam 30 Menit'),
+(8, 'image/webaplicationV2.webp', 100000, 'Ethical Web Application Hacking & Security V2 ', '2024-11-01', 'Kelas ini berfokus pada serangan web modern seperti IDOR, API exploitation, hingga advanced SQLi dan XSS. Peserta akan memahami cara kerja serangan, bagaimana mencegahnya, dan best practice dalam pengamanan aplikasi web. Sangat cocok untuk developer maupun security tester.', 'SQL Injection & XSS advanced, Insecure Direct Object Reference (IDOR), API security testing, Defense in depth', 'Advanced web hacking, API security, exploit analysis, secure coding.', 4, '2 Jam 5 Menit'),
+(9, 'image/apache.svg', 75000, 'Membangun Apache Web Server dengan keamanan yang optimal V2', '2025-05-16', 'Apache adalah web server populer yang digunakan di banyak infrastruktur. Kelas ini membahas instalasi, konfigurasi, hingga penguatan keamanan Apache. Peserta akan belajar mengatur virtual host, menggunakan SSL/TLS, serta menambahkan modul keamanan seperti mod_security. Selain itu, dibahas juga tuning performa agar server lebih cepat dan stabil.\r\n', 'Instalasi & konfigurasi Apache, Virtual host & mod_security, SSL/TLS setup, Performance tuning', 'Apache administration, server hardening, SSL/TLS setup, performance tuning.', 4, '1 Jam 20 Menit'),
+(10, 'image/httpsreverse.webp', 75000, 'Membangun Infrastruktur Modern Berbasis HTTPS Reverse Proxy dengan Proxmox', '2025-05-01', 'Reverse proxy berbasis HTTPS menjadi salah satu pondasi keamanan dalam arsitektur server modern. Kelas ini mengajarkan bagaimana membangun reverse proxy di atas Proxmox, lengkap dengan sertifikat SSL Let’s Encrypt, load balancing, dan integrasi dengan VM maupun container.', 'Instalasi & konfigurasi reverse proxy, Load balancing, HTTPS & Let’s Encrypt, Integrasi dengan VM & container', 'Reverse proxy setup, SSL management, load balancing, Proxmox integration.', 4, '2 Jam'),
+(11, 'image/docker.png', 75000, 'Membangun Server Monolith dengan Docker dengan cepat dan mudah Panduan dari Instalasi hingga Deploy v2', '2025-08-13', 'Docker adalah teknologi container yang banyak digunakan dalam pengembangan modern. Kelas ini membahas bagaimana membangun server monolith menggunakan Docker, mulai dari instalasi, membuat container, hingga deployment aplikasi. Peserta juga akan belajar praktik terbaik dalam manajemen Docker agar server tetap efisien.', 'Instalasi Docker, Membuat container custom, Deployment monolith apps, Best practice manajemen Docker', 'Docker containerization, deployment monolith, image building, container management.', 4, '1 Jam 35 Menit'),
+(12, 'image/frankenPHP.png', 75000, 'Membangun layanan server dengan platform PHP modern menggunakan FrankenPHP v2', '2025-04-19', 'FrankenPHP adalah server PHP modern yang dirancang untuk performa tinggi. Kelas ini membahas cara instalasi, konfigurasi, dan optimasi FrankenPHP agar aplikasi PHP berjalan lebih cepat dan aman. Peserta juga akan belajar praktik deployment aplikasi modern berbasis PHP.', 'Instalasi FrankenPHP, Konfigurasi server modern, Benchmarking & tuning performa, Deploy aplikasi PHP', 'PHP server modern, FrankenPHP, web hosting, performance optimization.', 4, '1 Jam 25 Menit'),
+(13, 'image/nesus.webp', 75000, 'Nessus & Eksploitasi Kerentanan di Sistem & Aplikasi', '2025-05-14', 'Nessus adalah salah satu tool scanning kerentanan paling populer. Kelas ini mengajarkan cara menggunakan Nessus untuk menemukan celah pada sistem dan aplikasi, serta bagaimana memanfaatkan hasil scan untuk pengujian penetrasi. Peserta akan memahami langkah demi langkah mulai dari instalasi, scanning, hingga eksploitasi.', 'Instalasi & konfigurasi Nessus, Scan sistem & aplikasi, Analisis laporan kerentanan, Eksploitasi hasil scan', 'Vulnerability scanning, Nessus usage, penetration testing, exploit analysis.', 4, '2 Jam 20 Menit'),
+(14, 'image/proxmoxVE.webp', 150000, 'Proxmox Virtual Environment (Proxmox VE) untuk kebutuhan server ', '2025-01-31', 'Proxmox VE adalah platform virtualisasi open-source yang kuat untuk membangun server enterprise. Kelas ini membahas instalasi, pembuatan VM & container, manajemen backup, serta cluster dan high availability. Peserta akan memahami cara membangun infrastruktur virtual yang stabil dan aman.', 'Instalasi Proxmox, Manajemen VM & container, Backup & restore, Cluster & high availability', 'Virtualization, Proxmox management, backup & restore, HA cluster.', 4, '2 Jam 10 Menit'),
+(15, 'image/officenetwork.jpg', 35000, 'Webinar Membangun Layanan Internet Kantor dengan Keamanan Maksimal dengan menggunakan Mikrotik RouterOS v7 ', '2024-08-29', 'Webinar ini membahas bagaimana membangun jaringan internet kantor yang aman dan stabil menggunakan Mikrotik RouterOS v7. Peserta akan mempelajari konfigurasi routing, firewall, VPN, dan manajemen bandwidth, sehingga dapat mengoptimalkan layanan internet di lingkungan kantor.', 'Routing & NAT, Firewall & filtering, VPN di RouterOS v7, Bandwidth management', 'Advanced Mikrotik, firewall, VPN setup, bandwidth management.', 4, '1 Jam 15 Menit'),
+(16, 'image/hackingandsecurity.jpg', 75000, 'Webinar X-code – Ethical network hacking & Security V2', '2024-09-10', 'Webinar ini fokus pada keamanan jaringan dengan pendekatan ethical hacking. Peserta akan mempelajari teknik sniffing, spoofing, hingga serangan jaringan wireless, serta strategi pertahanan yang dapat diterapkan untuk mengamankan infrastruktur jaringan.', 'Sniffing & spoofing, Network attacks, Wireless security, Defense strategies', 'Network hacking, wireless security, sniffing & spoofing, defense strategies.', 4, '1 Jam 50 Menit'),
+(17, 'image/windowshacking.webp', 50000, 'Windows Hacking & Security', '2025-09-02', 'Windows sering menjadi target serangan karena digunakan secara luas. Kelas ini membahas celah keamanan pada Windows, teknik privilege escalation, serta cara melakukan hardening agar sistem lebih aman. Selain itu, peserta akan mempelajari analisis malware dasar untuk memahami ancaman di Windows.', 'Windows user management, Local & remote exploits, Malware & defense, Hardening Windows Server & Desktop', 'Windows security, privilege escalation, malware analysis, system hardening.', 4, '2 Jam 10 Menit');
 
 -- --------------------------------------------------------
 
@@ -86,7 +88,45 @@ INSERT INTO `password_reset` (`id`, `user_id`, `email`, `code`, `expires_at`, `u
 (3, 9, 'kevinprasetyo817@gmail.com', '3923', '2025-11-06 04:04:51', 0, '2025-11-06 03:54:51'),
 (4, 9, 'kevinprasetyo817@gmail.com', '2799', '2025-11-06 04:07:54', 0, '2025-11-06 03:57:54'),
 (5, 9, 'kevinprasetyo817@gmail.com', '5671', '2025-11-06 04:10:54', 0, '2025-11-06 04:00:54'),
-(6, 9, 'kevinprasetyo817@gmail.com', '8516', '2025-11-06 04:13:16', 0, '2025-11-06 04:03:16');
+(6, 9, 'kevinprasetyo817@gmail.com', '8516', '2025-11-06 04:13:16', 0, '2025-11-06 04:03:16'),
+(7, 9, 'kevinprasetyo817@gmail.com', '5743', '2025-11-06 15:33:34', 0, '2025-11-06 15:23:34'),
+(8, 9, 'kevinprasetyo817@gmail.com', '4877', '2025-11-06 15:54:35', 0, '2025-11-06 15:44:35'),
+(9, 9, 'kevinprasetyo817@gmail.com', '7045', '2025-11-07 12:52:13', 1, '2025-11-07 05:42:13'),
+(10, 9, 'kevinprasetyo817@gmail.com', '9414', '2025-11-07 12:55:12', 1, '2025-11-07 05:45:12'),
+(11, 12, 'kevinprasetyo976@gmail.com', '5405', '2025-11-07 13:14:07', 1, '2025-11-07 06:04:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pembelian`
+--
+
+CREATE TABLE `pembelian` (
+  `idpembelian` int NOT NULL,
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `metodepembayaran` varchar(100) NOT NULL,
+  `status` varchar(100) NOT NULL,
+  `buktiupload` varchar(255) DEFAULT NULL,
+  `tanggal` datetime DEFAULT CURRENT_TIMESTAMP,
+  `harga` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `pembelian`
+--
+
+INSERT INTO `pembelian` (`idpembelian`, `id`, `user_id`, `metodepembayaran`, `status`, `buktiupload`, `tanggal`, `harga`) VALUES
+(1, 3, 13, 'Bank BCA', 'Menunggu Pembayaran', NULL, '2025-11-24 13:59:09', 50050),
+(2, 11, 13, 'Bank BRI', 'Menunggu Pembayaran', NULL, '2025-11-24 14:00:15', 75075),
+(3, 11, 13, 'Bank BCA', 'Menunggu Pembayaran', NULL, '2025-11-24 14:09:20', 75075),
+(4, 11, 13, 'Bank BCA', 'Menunggu Pembayaran', NULL, '2025-11-24 14:20:23', 75075),
+(5, 11, 14, 'Bank BCA', 'Menunggu Pembayaran', NULL, '2025-11-24 14:27:10', 75075),
+(6, 11, 14, 'Bank BCA', 'Menunggu Pembayaran', NULL, '2025-11-24 14:34:56', 75075),
+(7, 3, 14, 'Bank BRI', 'Menunggu Pembayaran', NULL, '2025-11-25 08:13:44', 50050),
+(8, 3, 14, 'Bank BCA', 'pending', NULL, '2025-11-25 08:19:58', 50050),
+(9, 11, 14, 'Bank BRI', 'pending', NULL, '2025-11-25 08:23:42', 75075),
+(13, 13, 15, 'Bank BCA', 'pending', '1764050961805-414576287.pdf', '2025-11-25 13:09:14', 75075);
 
 -- --------------------------------------------------------
 
@@ -111,9 +151,13 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`user_id`, `user_first_name`, `user_last_name`, `user_email`, `user_password`, `user_phone`, `user_image`) VALUES
 (6, 'Bobi', 'Nasution', 'dia22@gmail.com', '$2b$10$iYshqp5bd7gO.dNsUPfVx.IX5Exjso7Qc9uTONQ4iWrFVidcKHXZ.', '', ''),
 (8, 'Viki', 'Yohanes', 'vikiyh12@gmail.com', '$2b$10$k.5y7FOsa2ttw6lbuVxFJetBuBGmQzhTKRzOEpE27KQ6iHh4h6.Du', '', ''),
-(9, 'Kevin', 'Prasetyo', 'kevinprasetyo817@gmail.com', '$2b$10$Uc/uO.iXwUgYsvk1FgWIOeYvwwhwo3pr2ySZEDXEPxViyVGLn59tu', '0856778889955', '/uploads/img/1762264615644.png'),
+(9, 'Kevin', 'Prasetyo', 'kevinprasetyo817@gmail.com', '$2b$10$deC663I1YxZYUA0AKSmaY.5P1M3ZkdVANcbWPbBb/Y8WIDaa5kyzG', '0856778889955', '/uploads/img/1762264615644.png'),
 (10, 'Leif', 'Botak', 'leif@gmail.com', '$2b$10$SrkjRCIGC5GXxYe3OLCVju.BxvUveSLt2IMohVE.fcYs0pdkF7TJO', '087817958859', ''),
-(11, 'jo', 'nat', 'jo@gmail.com', '$2b$10$uqJGRPjvOuitEpceJvn/COx.Gjysr.WF1sTCg8zSBAQi6ycGKnBWq', '+62856778889955', '');
+(11, 'jo', 'nat', 'jo@gmail.com', '$2b$10$uqJGRPjvOuitEpceJvn/COx.Gjysr.WF1sTCg8zSBAQi6ycGKnBWq', '+62856778889955', ''),
+(12, 'kevin', 'glory', 'kevinprasetyo976@gmail.com', '$2b$10$pHRcKlpinLISuTBCLIBGX.DGu6uerPXl7vVN1ztk5mN1/yICqzpa.', '089524139605', ''),
+(13, 'KARO', 'BATAK', 'kevinprasetyo8@gmail.com', '$2b$10$acNz55qNskFMDw7uG6GP3edHJlQfQvjg.to4TlSwT9C6OD37jWHMq', '08564564564545', '/uploads/img/1763949855307.png'),
+(14, 'Acer', 'Nitro', 'acer@gmail.com', '$2b$10$dRY02Dha51TWzXLRPmLQue0vthUfWKOuFqhzYRU5DBCpAvVIU3Qwe', '083452352543', ''),
+(15, 'user', 'satu', 'user@gmail.com', '$2b$10$0j55DSbMX9AMV/vn.5TSceBBYeKaLqb0qKA2O626dGrSr7NjPgB6G', '08342353453453', '/uploads/img/1764034586676.jpg');
 
 --
 -- Indexes for dumped tables
@@ -132,6 +176,12 @@ ALTER TABLE `password_reset`
   ADD PRIMARY KEY (`id`),
   ADD KEY `email` (`email`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `pembelian`
+--
+ALTER TABLE `pembelian`
+  ADD PRIMARY KEY (`idpembelian`);
 
 --
 -- Indexes for table `user`
@@ -153,13 +203,19 @@ ALTER TABLE `course_video`
 -- AUTO_INCREMENT for table `password_reset`
 --
 ALTER TABLE `password_reset`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `pembelian`
+--
+ALTER TABLE `pembelian`
+  MODIFY `idpembelian` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
