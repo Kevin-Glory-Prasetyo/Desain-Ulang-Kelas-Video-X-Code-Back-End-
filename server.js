@@ -25,7 +25,7 @@ const __dirname = path.dirname(__filename);
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:5501",
+  origin: ["http://localhost:5501","http://localhost:5500"],
   credentials: true
 }));
 

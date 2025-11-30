@@ -5,7 +5,7 @@ import multer from "multer";
 import path from "path";
 import { uploadBukti } from "../middleware/uploadBukti.js";
 
-
+import { dataPembelian, download, file, getBukti, approve } from "../controller/pembelianController.js";
 
 const router = express.Router();
 
@@ -13,79 +13,69 @@ const router = express.Router();
 // 1. POST /api/transaksi
 // ===========================
 router.post("/transaksi", verifyToken, async (req, res) => {
-    try {
-        const user_id = req.user.id;
-        const { productId, metodePembayaran, harga } = req.body;
+  try {
+    const user_id = req.user.id;
+    const { productId, metodePembayaran, harga } = req.body;
 
-        if (!productId || !metodePembayaran || !harga) {
-            return res.status(400).json({
-                message: "Data transaksi tidak lengkap"
-            });
-        }
+    if (!productId || !metodePembayaran || !harga) {
+      return res.status(400).json({
+        message: "Data transaksi tidak lengkap",
+      });
+    }
 
-        // Insert ke tabel pembelian
-        const sql = `
+    // Insert ke tabel pembelian
+    const sql = `
             INSERT INTO pembelian (id, user_id, metodepembayaran, status, harga)
             VALUES (?, ?, ?, 'pending', ?)
         `;
 
-        await db.query(sql, [
-            productId,
-            user_id,
-            metodePembayaran,
-            harga
-        ]);
+    await db.query(sql, [productId, user_id, metodePembayaran, harga]);
 
-        res.json({ message: "Transaksi berhasil dibuat" });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Gagal membuat transaksi" });
-    }
+    res.json({ message: "Transaksi berhasil dibuat" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Gagal membuat transaksi" });
+  }
 });
 
 // ===========================
 // 2. GET /api/histori
 // ===========================
 router.get("/histori", verifyToken, async (req, res) => {
-    try {
-        const user_id = req.user.id;
+  try {
+    const user_id = req.user.id;
 
-        const sql = `
+    const sql = `
           SELECT 
-              p.idpembelian,
-              p.tanggal,
-              p.harga,
-              p.status,
-              p.metodepembayaran,
-              p.buktiupload,
-              c.namaProduk,
-              c.gambarProduk
+              p.*,      
+              u.*,       
+              c.*        
           FROM pembelian p
-          LEFT JOIN course_video c ON c.id = p.id
+          INNER JOIN user u ON u.user_id = p.user_id
+          INNER JOIN course_video c ON c.id = p.id         
           WHERE p.user_id = ?
-          ORDER BY p.tanggal DESC
+          ORDER BY p.tanggal DESC;
+
         `;
 
-        const [rows] = await db.query(sql, [user_id]);
+    const [rows] = await db.query(sql, [user_id]);
 
-        res.json(rows);
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Gagal mengambil histori transaksi" });
-    }
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Gagal mengambil histori transaksi" });
+  }
 });
 
 // =============== MULTER CONFIG =====================
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/bukti"); 
+    cb(null, "uploads/bukti");
   },
   filename: (req, file, cb) => {
-    const unique = Date.now() + "-" + Math.round(Math.random() * 1E9);
+    const unique = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, unique + path.extname(file.originalname));
-  }
+  },
 });
 
 const upload = multer({
@@ -96,33 +86,39 @@ const upload = multer({
       return cb(new Error("Format file tidak didukung"));
     }
     cb(null, true);
-  }
+  },
 });
 
 // =============== UPLOAD BUKTI =====================
-router.post("/upload-bukti/:idpembelian",
+router.post(
+  "/upload-bukti/:idpembelian",
   verifyToken,
   uploadBukti.single("bukti"),
   async (req, res) => {
-
     if (!req.file) {
-        return res.status(400).json({ message: "Tidak ada file yang dikirim" });
+      return res.status(400).json({ message: "Tidak ada file yang dikirim" });
     }
 
     const id = req.params.idpembelian;
 
     await db.query(
-        "UPDATE pembelian SET buktiupload = ? WHERE idpembelian = ?",
-        [req.file.filename, id]
+      "UPDATE pembelian SET buktiupload = ? WHERE idpembelian = ?",
+      [req.file.filename, id]
     );
 
     res.json({
-        success: true,
-        message: "Upload bukti berhasil",
-        filename: req.file.filename
+      success: true,
+      message: "Upload bukti berhasil",
+      filename: req.file.filename,
     });
-});
+  }
+);
 
+router.get("/dataPembelian", dataPembelian);
+router.post("/download", download);
+router.get("/file", file);
 
+router.get("/getBukti", getBukti);
+router.patch("/approve/:id", approve);
 
 export default router;
